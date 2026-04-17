@@ -1,0 +1,76 @@
+name: Bug report
+description: The skill produced wrong, incomplete, or unexpected output
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing a bug! Since this is a prompt-driven skill (no code runs), bugs are usually caused by prompts producing unexpected Copilot behavior. The more context you provide, the easier it is to reproduce and fix.
+
+  - type: input
+    id: downstream-repo
+    attributes:
+      label: Downstream repo URL
+      description: The GitHub repo you tried to integrate against
+      placeholder: github.com/stripe/stripe-go
+    validations:
+      required: true
+
+  - type: textarea
+    id: context-file
+    attributes:
+      label: Integration context used
+      description: Did you use an INTEGRATION.md, a README, or another file? Paste the relevant section or describe it.
+      placeholder: Used the repo README — no INTEGRATION.md present
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-output
+    attributes:
+      label: What Copilot actually did
+      description: Describe or paste the unexpected output
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-output
+    attributes:
+      label: What you expected
+      description: What should have happened instead?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: phase
+    attributes:
+      label: Which phase failed?
+      options:
+        - Context discovery (fetching files from the downstream repo)
+        - Integration analysis (synthesizing the fetched context)
+        - Clarification questions (wrong questions asked, or gate skipped)
+        - Plan generation (plan was wrong, incomplete, or skipped)
+        - Fleet execution (wrong code generated, wrong file paths)
+        - Cleanup (temp files not deleted)
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - GitHub Copilot CLI
+        - Claude (Phase 2)
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Plugin version
+      description: Check `plugin.json` → `version`
+      placeholder: "1.0.0"
+    validations:
+      required: false

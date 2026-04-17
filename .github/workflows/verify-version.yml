@@ -1,0 +1,43 @@
+name: Verify plugin version bumped
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get version on PR branch
+        id: pr_version
+        run: |
+          VERSION=$(jq -r .version .github/plugin/plugin.json)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Get version on main
+        id: main_version
+        run: |
+          git fetch origin main
+          VERSION=$(git show origin/main:.github/plugin/plugin.json | jq -r .version)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Fail if version has not been bumped
+        run: |
+          PR="${{ steps.pr_version.outputs.version }}"
+          MAIN="${{ steps.main_version.outputs.version }}"
+          echo "main version : $MAIN"
+          echo "PR version   : $PR"
+          if [ "$PR" = "$MAIN" ]; then
+            echo ""
+            echo "❌ plugin.json version ($PR) is the same as main."
+            echo "   Bump the version in .github/plugin/plugin.json before merging."
+            echo "   Patch: 1.0.x → typos, wording, minor prompt tweaks"
+            echo "   Minor: 1.x.0 → new patterns, examples, file types"
+            echo "   Major: x.0.0 → new platform, breaking protocol changes"
+            exit 1
+          fi
+          echo "✅ Version bumped: $MAIN → $PR"

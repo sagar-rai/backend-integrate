@@ -1,0 +1,58 @@
+name: Release on merge to main
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read current version from plugin.json
+        id: version
+        run: |
+          VERSION=$(jq -r .version .github/plugin/plugin.json)
+          echo "current=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check if release already exists for this version
+        id: check
+        run: |
+          VERSION="${{ steps.version.outputs.current }}"
+          if gh release view "v$VERSION" &>/dev/null; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "Release v$VERSION already exists — skipping."
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "No release found for v$VERSION — will create."
+          fi
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create or update maintenance branch for previous major version
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          MAJOR=$(echo "${{ steps.version.outputs.current }}" | cut -d. -f1)
+          if git rev-parse HEAD~1 &>/dev/null; then
+            PREV_SHA=$(git rev-parse HEAD~1)
+            git branch "$MAJOR.x" "$PREV_SHA" 2>/dev/null || git branch -f "$MAJOR.x" "$PREV_SHA"
+            git push origin "$MAJOR.x" --force
+          else
+            echo "Only one commit in history — skipping maintenance branch creation."
+          fi
+
+      - name: Create GitHub Release
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          VERSION="${{ steps.version.outputs.current }}"
+          gh release create "v$VERSION" \
+            --title "v$VERSION" \
+            --generate-notes \
+            --target main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
