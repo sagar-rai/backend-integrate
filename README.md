@@ -38,11 +38,6 @@ copilot plugin install sagar-rai/backend-integrate
 
 That's it. Requires `gh auth login` to be active.
 
-> Once listed on [awesome-copilot](https://github.com/github/awesome-copilot), you'll also be able to install with:
-> ```bash
-> copilot plugin install backend-integrate@awesome-copilot
-> ```
-
 ---
 
 ## Quick start
