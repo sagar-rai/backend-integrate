@@ -1,0 +1,67 @@
+name: Feature request
+description: Suggest a new language pattern, prompt improvement, example, or platform support
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Feature requests are most actionable when they include a concrete example of what the skill should do differently. Remember: all behavior lives in markdown prompts — no code required.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which area does this affect?
+      options:
+        - Context discovery (prompts/context_discovery.md)
+        - Integration analysis (prompts/integration_analysis.md)
+        - Clarification questions (prompts/clarification_guide.md)
+        - Fleet decomposition / new language pattern (prompts/fleet_decomposition.md)
+        - New example (examples/)
+        - Documentation (README.md, examples/)
+        - Claude plugin support (Phase 2)
+        - Agent protocol (.github/agents/)
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe what currently doesn't work well or is missing
+      placeholder: When integrating a gRPC service, the skill doesn't discover .proto files automatically...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How should the skill behave after this change? Include example prompt text or bash commands if relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: test-repo
+    attributes:
+      label: Downstream repo to test against
+      description: A public GitHub repo that exercises this feature
+      placeholder: github.com/grpc/grpc-go
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Constraints (please confirm your proposal respects these)
+      options:
+        - label: No executable code (Python, shell scripts, JS, etc.)
+          required: false
+        - label: No MCP server — only `gh api` or `gh repo clone`
+          required: false
+        - label: No external dependencies beyond `gh auth login`
+          required: false
+        - label: Clarify-before-plan and plan-before-execute gates are preserved
+          required: false
+        - label: Session cleanup (`rm -rf ~/.copilot/sessions/<uuid>/`) is preserved
+          required: false

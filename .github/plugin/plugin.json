@@ -1,0 +1,14 @@
+{
+  "name": "backend-integrate",
+  "description": "Give Copilot full downstream service context to plan and execute backend integrations — fetches repo files via gh CLI, builds integration context, asks clarifying questions, then executes in parallel fleet mode.",
+  "version": "1.0.1",
+  "author": {
+    "name": "Sagar Rai",
+    "url": "https://github.com/sagar-rai/backend-integrate"
+  },
+  "repository": "https://github.com/sagar-rai/backend-integrate",
+  "license": "MIT",
+  "keywords": ["copilot", "integration", "backend", "downstream-service", "refactoring", "context", "fleet", "gh-cli", "service-integration"],
+  "agents": [".github/agents/backend-integrate.agent.md"],
+  "skills": ["skills/backend-integrate/"]
+}
