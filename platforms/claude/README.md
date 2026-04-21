@@ -1,31 +1,85 @@
-# Claude Plugin Support — Phase 2
+# Claude Code Plugin — backend-integrate
 
-This directory will contain the Claude plugin manifest and skill definition for Phase 2 of `backend-integrate`.
+This directory contains the Claude Code plugin for `backend-integrate`. It is a complete, self-contained plugin that can be installed directly from this repo.
 
-## Planned structure
+## Install
 
 ```
-platforms/
-  claude/
-    manifest.json          ← Claude plugin manifest (name, description, skills)
-    skills/
-      backend-integrate/
-        SKILL.md           ← Claude-compatible skill definition with frontmatter
-  copilot/
-    plugin.json            ← (symlink or copy of .github/plugin/plugin.json for parity)
+# Add this repo as a marketplace (one-time)
+/plugin marketplace add sagar-rai/backend-integrate
+
+# Install the plugin
+/plugin install backend-integrate@backend-integrate
 ```
 
-## Design principles for Phase 2
+## Local development
 
-- **Shared prompts** — `prompts/` is platform-agnostic. Both Copilot and Claude read the same `context_discovery.md`, `integration_analysis.md`, `clarification_guide.md`, and `fleet_decomposition.md`.
-- **Platform-specific manifests only** — each platform gets its own manifest format; no prompt duplication.
-- **Same version, both platforms** — `plugin.json` and `manifest.json` share the same semver version. A release bumps both.
-- **Backward compatible** — the Copilot plugin path (`.github/plugin/plugin.json`) will not move in Phase 2.
+```bash
+claude --plugin-dir ./platforms/claude
+```
 
-## Version bump
+Then reload after changes:
+```
+/reload-plugins
+```
 
-Phase 2 will ship as `v2.0.0` — a major version bump because it introduces a new platform directory and manifest format. See [CHANGELOG.md](../../CHANGELOG.md).
+## Plugin structure
 
-## Contributing
+```
+platforms/claude/
+├── .claude-plugin/
+│   └── plugin.json                  ← Plugin manifest (v2.0.0)
+├── skills/
+│   └── backend-integrate/
+│       └── SKILL.md                 ← Skill: /backend-integrate:backend-integrate
+├── agents/
+│   ├── backend-integrate.md         ← Main orchestrator (maxTurns: 60)
+│   ├── fleet-a.md                   ← Track A: client + config
+│   ├── fleet-b.md                   ← Track B: service layer + DI
+│   └── fleet-c.md                   ← Track C: tests + docs
+└── README.md                        ← This file
+```
 
-If you want to help build Phase 2 Claude support, open a feature request using the [Claude plugin support](../../.github/ISSUE_TEMPLATE/feature_request.yml) template and tag it `enhancement`.
+## How to invoke
+
+Invoke the skill explicitly or just describe what you want:
+
+```
+/backend-integrate:backend-integrate
+```
+
+Or naturally:
+
+```
+Integrate the payment service from github.com/acme/payment-svc — use INTEGRATION.md for context
+```
+
+## Fleet agents
+
+After you approve the integration plan, the orchestrator spawns three subagents in sequence:
+
+| Agent | Track | Starts when | Builds |
+|---|---|---|---|
+| `fleet-a` | A | Immediately after approval | Downstream HTTP/gRPC client + config struct |
+| `fleet-b` | B | After `fleet-a` completes | Service layer + dependency injection wiring |
+| `fleet-c` | C | After `fleet-b` completes | Unit tests + integration tests + doc updates |
+
+## Shared prompts
+
+All behavioral prompts live in `prompts/` at the repo root and are shared between the Copilot and Claude plugins:
+
+| File | Controls |
+|---|---|
+| `prompts/context_discovery.md` | How to fetch files from downstream repos via `gh` CLI |
+| `prompts/integration_analysis.md` | How to synthesize fetched context |
+| `prompts/clarification_guide.md` | 7 required questions before any plan is generated |
+| `prompts/fleet_decomposition.md` | How to split integration into parallel tracks |
+
+## Session cleanup
+
+Temporary files are stored in `~/.agents/session/<uuid>/` and deleted automatically after context is loaded into memory. Nothing is written to your repo until you approve the plan.
+
+## Requirements
+
+- Claude Code installed and authenticated
+- `gh` CLI installed and authenticated (`gh auth login`) — or let the agent install it for you

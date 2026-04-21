@@ -37,17 +37,26 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and
 
 ---
 
-## [2.0.0] — Planned (Phase 2)
+## [2.0.0] — 2026-04-21
 
 ### Added
-- Claude plugin support (`platforms/claude/`) — Claude-compatible manifest and skill definition
-- Shared `prompts/` directory used by both Copilot and Claude platforms
-- `platforms/copilot/` — Copilot-specific manifest alongside Claude manifest
+- Claude Code plugin support (`platforms/claude/`) — full plugin with manifest, skill, and fleet agents
+- `.claude-plugin/marketplace.json` at repo root — enables `/plugin marketplace add sagar-rai/backend-integrate` install flow
+- `platforms/claude/agents/backend-integrate.md` — main orchestrator agent (model: sonnet, maxTurns: 60)
+- `platforms/claude/agents/fleet-a.md` — Track A subagent: downstream client + config struct
+- `platforms/claude/agents/fleet-b.md` — Track B subagent: service layer + DI wiring
+- `platforms/claude/agents/fleet-c.md` — Track C subagent: unit tests + integration tests + docs
+- `platforms/claude/skills/backend-integrate/SKILL.md` — Claude skill definition
+
+### Changed
+- Session workspace path migrated from `~/.copilot/sessions/<uuid>/` to `~/.agents/session/<uuid>/` — platform-neutral path shared by both Copilot and Claude plugins
+- Updated all references across: agent protocol, prompts, skills, README, CONTRIBUTING, AGENTS, SECURITY, copilot-instructions, PR template
 
 ### Notes
-- Phase 2 introduces the `platforms/` directory structure
-- All prompt behavior remains shared across platforms — only manifests differ
-- Existing Copilot plugin paths remain unchanged for backward compatibility
+- All `prompts/` files are shared across platforms — no duplication
+- Copilot plugin paths (`.github/plugin/`, `.github/agents/`) are unchanged — fully backward compatible
+- Claude Code install: `/plugin marketplace add sagar-rai/backend-integrate` then `/plugin install backend-integrate@backend-integrate`
+- Local Claude Code dev testing: `claude --plugin-dir ./platforms/claude`
 
 ---
 

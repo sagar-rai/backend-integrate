@@ -10,4 +10,4 @@ The authoritative Copilot manifest lives at:
 
 That path is what the Copilot CLI reads and **must not move**. This directory exists only for organizational symmetry with `platforms/claude/` — do not duplicate or replace `plugin.json` here.
 
-See [platforms/claude/README.md](../claude/README.md) for the full Phase 2 plan.
+**Note:** As of v2.0.0, the session workspace path changed from `~/.copilot/sessions/<uuid>/` to `~/.agents/session/<uuid>/` — a platform-neutral path shared by both Copilot and Claude plugins.

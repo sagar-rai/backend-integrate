@@ -92,7 +92,7 @@ Copilot will take it from there.
               client → service layer → config → DI wiring → tests → docs
                 │
                 ▼
-6. CLEAN UP   All temporary files removed from ~/.copilot/sessions/<uuid>/
+6. CLEAN UP   All temporary files removed from ~/.agents/session/<uuid>/
 ```
 
 ---
@@ -163,7 +163,7 @@ For a typical 10-file integration, fleet mode is significantly faster than seque
 All files fetched from the downstream repo are stored temporarily in:
 
 ```
-~/.copilot/sessions/<uuid>/
+~/.agents/session/<uuid>/
 ```
 
 They are deleted automatically once Copilot has read them into its working context. Nothing is written to your repo until you approve the integration plan.
@@ -265,7 +265,7 @@ No Python. No `pip install`. No npm. No Docker.
 
 - **No telemetry** — the plugin never phones home
 - **No MCP server** — all GitHub access via your own `gh` token, no context pollution
-- **Temporary files only** — downloaded to `~/.copilot/sessions/<uuid>/` and deleted after use
+- **Temporary files only** — downloaded to `~/.agents/session/<uuid>/` and deleted after use
 - **No credentials written to disk** — API keys stay in env vars, never in downloaded files
 - **Nothing written to your repo** — until you explicitly approve the integration plan
 

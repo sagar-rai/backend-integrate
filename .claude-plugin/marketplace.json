@@ -1,0 +1,24 @@
+{
+  "name": "backend-integrate",
+  "owner": {
+    "name": "Sagar Rai"
+  },
+  "metadata": {
+    "description": "Marketplace for the backend-integrate plugin — fetches downstream service context from GitHub repos and executes backend integrations in parallel fleet mode.",
+    "version": "2.0.0"
+  },
+  "plugins": [
+    {
+      "name": "backend-integrate",
+      "source": "./platforms/claude",
+      "description": "Fetch downstream service context from a GitHub repo and execute a backend integration into your current service — fetches relevant files via gh CLI, asks clarifying questions, creates a plan, and runs it in fleet mode.",
+      "version": "2.0.0",
+      "author": {
+        "name": "Sagar Rai"
+      },
+      "repository": "https://github.com/sagar-rai/backend-integrate",
+      "license": "MIT",
+      "keywords": ["integration", "backend", "downstream-service", "fleet", "gh-cli", "service-integration"]
+    }
+  ]
+}

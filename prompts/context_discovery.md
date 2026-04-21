@@ -13,7 +13,7 @@ This guide instructs Copilot on how to discover and download relevant files from
 
 ```bash
 UUID=$(uuidgen | tr '[:upper:]' '[:lower:]')
-SESSION="$HOME/.copilot/sessions/$UUID"
+SESSION="$HOME/.agents/session/$UUID"
 mkdir -p "$SESSION"
 echo "Session: $SESSION"
 ```

@@ -87,7 +87,7 @@ The plugin manifest. The `agents` and `skills` arrays must reference paths that 
 5. **No external data uploads** — the plugin must never send data to third-party services
 6. **Clarification gate must stay** — never allow planning before all 7 required questions are answered
 7. **Plan gate must stay** — never allow code generation before the user approves the plan
-8. **Cleanup must always run** — `rm -rf ~/.copilot/sessions/<uuid>/` must always happen
+8. **Cleanup must always run** — `rm -rf ~/.agents/session/<uuid>/` must always happen
 
 ---
 
@@ -153,7 +153,7 @@ Integrate github.com/stripe/stripe-go using README.md as context — I need char
 
 ### Full checklist
 - [ ] `gh` is detected and auto-install triggers correctly if missing
-- [ ] The integration context file is downloaded to `~/.copilot/sessions/<uuid>/`
+- [ ] The integration context file is downloaded to `~/.agents/session/<uuid>/`
 - [ ] Relevant files (proto, openapi, client, env) are downloaded — not everything
 - [ ] An analysis summary is shown to the user before questions begin
 - [ ] All 7 required questions from `clarification_guide.md` are asked
@@ -161,7 +161,7 @@ Integrate github.com/stripe/stripe-go using README.md as context — I need char
 - [ ] The plan shows exact file paths (not placeholders)
 - [ ] The user is asked to approve the plan before any code is written
 - [ ] Fleet tracks follow A → B → C dependency order
-- [ ] `~/.copilot/sessions/<uuid>/` is deleted after context is loaded
+- [ ] `~/.agents/session/<uuid>/` is deleted after context is loaded
 - [ ] No MCP calls are made — only `gh` CLI
 
 ### Good public repos to test against
@@ -219,12 +219,12 @@ The `description` field is used by Copilot to match user intent to the right ski
 Whenever the plugin downloads files from a downstream repo, it uses:
 
 ```
-~/.copilot/sessions/<uuid>/
+~/.agents/session/<uuid>/
 ```
 
 - UUID is generated with `uuidgen | tr '[:upper:]' '[:lower:]'`
-- Files are written here during context fetch, read into Copilot's memory, then deleted
+- Files are written here during context fetch, read into the AI's memory, then deleted
 - The directory is always cleaned up with `rm -rf "$SESSION"` — never leave it behind
-- On Windows, the equivalent is `$env:USERPROFILE\.copilot\sessions\<uuid>\`
+- On Windows, the equivalent is `$env:USERPROFILE\.agents\session\<uuid>\`
 
 If you add new file-fetching steps to the agent, always write to `$SESSION/` and always clean up.

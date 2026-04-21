@@ -118,7 +118,7 @@ There is no automated test suite — this is a prompt-driven skill. Test manuall
    - Presents an analysis summary
    - Asks all 7 required clarifying questions before planning
    - Produces a file-level plan before writing any code
-   - Cleans up `~/.copilot/sessions/<uuid>/` after context is loaded
+   - Cleans up `~/.agents/session/<uuid>/` after context is loaded
 
 ### Test checklist
 
@@ -126,7 +126,7 @@ There is no automated test suite — this is a prompt-driven skill. Test manuall
 - [ ] No code is written before the plan is presented
 - [ ] No code is written before the plan is approved
 - [ ] `gh` CLI is used for all GitHub access (no curl, no MCP)
-- [ ] Temp files appear in `~/.copilot/sessions/<uuid>/`
+- [ ] Temp files appear in `~/.agents/session/<uuid>/`
 - [ ] Temp files are deleted after context is loaded
 - [ ] The generated plan uses exact file paths (not placeholders)
 - [ ] Fleet tracks match the dependency order (A → B → C)

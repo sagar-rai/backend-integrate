@@ -90,7 +90,7 @@ Extract from the user's message:
 
 ```bash
 UUID=$(uuidgen | tr '[:upper:]' '[:lower:]')
-SESSION="$HOME/.copilot/sessions/$UUID"
+SESSION="$HOME/.agents/session/$UUID"
 mkdir -p "$SESSION"
 ```
 
