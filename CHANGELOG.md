@@ -40,23 +40,23 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and
 ## [2.0.0] — 2026-04-21
 
 ### Added
-- Claude Code plugin support (`platforms/claude/`) — full plugin with manifest, skill, and fleet agents
+- Claude Code plugin support (`platforms/claude/`) — full plugin with manifest, skill, and orchestrator agent
 - `.claude-plugin/marketplace.json` at repo root — enables `/plugin marketplace add sagar-rai/backend-integrate` install flow
-- `platforms/claude/agents/backend-integrate.md` — main orchestrator agent (model: sonnet, maxTurns: 60)
-- `platforms/claude/agents/fleet-a.md` — Track A subagent: downstream client + config struct
-- `platforms/claude/agents/fleet-b.md` — Track B subagent: service layer + DI wiring
-- `platforms/claude/agents/fleet-c.md` — Track C subagent: unit tests + integration tests + docs
-- `platforms/claude/skills/backend-integrate/SKILL.md` — Claude skill definition
+- `platforms/claude/.claude-plugin/plugin.json` — plugin manifest
+- `platforms/claude/agents/backend-integrate.md` — orchestrator agent (model: sonnet, maxTurns: 60), protocol mirrors the Copilot agent
+- `platforms/claude/skills/backend-integrate/SKILL.md` — Claude skill definition with full 9-step protocol inline, matching the Copilot SKILL.md format
 
 ### Changed
-- Session workspace path migrated from `~/.copilot/sessions/<uuid>/` to `~/.agents/session/<uuid>/` — platform-neutral path shared by both Copilot and Claude plugins
-- Updated all references across: agent protocol, prompts, skills, README, CONTRIBUTING, AGENTS, SECURITY, copilot-instructions, PR template
+- Session workspace path migrated from `~/.copilot/sessions/<uuid>/` to `~/.agents/session/<uuid>/` — platform-neutral, shared by both Copilot and Claude plugins
+- Updated all path references across: agent protocol, prompts, skills, README, CONTRIBUTING, AGENTS.md, SECURITY.md, copilot-instructions, PR template
+- Integration execution consolidated to 3 tracks (A → B → C): Track A handles client + config + `.env.example`, Track B handles service layer + DI, Track C handles tests + docs
 
 ### Notes
-- All `prompts/` files are shared across platforms — no duplication
-- Copilot plugin paths (`.github/plugin/`, `.github/agents/`) are unchanged — fully backward compatible
+- All `prompts/` files are shared across platforms — no duplication between Copilot and Claude
+- Copilot plugin paths (`.github/plugin/`, `.github/agents/`) unchanged — fully backward compatible
 - Claude Code install: `/plugin marketplace add sagar-rai/backend-integrate` then `/plugin install backend-integrate@backend-integrate`
-- Local Claude Code dev testing: `claude --plugin-dir ./platforms/claude`
+- Install from feature branch: `/plugin marketplace add sagar-rai/backend-integrate#<branch-name>`
+- Local testing: `claude --plugin-dir ./platforms/claude` from any project directory
 
 ---
 

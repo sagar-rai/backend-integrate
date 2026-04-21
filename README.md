@@ -1,11 +1,12 @@
 # backend-integrate
 
-**Give Copilot the full context it needs to integrate any downstream service — automatically.**
+**Give Copilot and Claude Code the full context they need to integrate any downstream service — automatically.**
 
-One command. Copilot fetches the right files, asks the right questions, and builds the integration in parallel.
+One command. The agent fetches the right files, asks the right questions, and builds the integration track by track.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![GitHub Copilot](https://img.shields.io/badge/GitHub-Copilot%20Plugin-black?logo=github)](https://github.com/features/copilot)
+[![Claude Code](https://img.shields.io/badge/Claude-Code%20Plugin-orange?logo=anthropic)](https://code.claude.com)
 
 </div>
 
@@ -30,13 +31,23 @@ Then you need to somehow convey ALL of that to Copilot in a chat window — or j
 
 ## Install
 
-Install directly from GitHub:
+### GitHub Copilot CLI
 
 ```bash
 copilot plugin install sagar-rai/backend-integrate
 ```
 
-That's it. Requires `gh auth login` to be active.
+### Claude Code
+
+```
+# Add this repo as a marketplace (one-time)
+/plugin marketplace add sagar-rai/backend-integrate
+
+# Install the plugin
+/plugin install backend-integrate@backend-integrate
+```
+
+Both require `gh auth login` to be active.
 
 ---
 
@@ -119,12 +130,9 @@ A typical integration produces:
 
 | Track | What's created | When |
 |---|---|---|
-| A (immediate) | Downstream HTTP/gRPC client + config struct | Starts immediately |
-| A (parallel) | `.env.example` updates + config registration | Starts immediately |
+| A (immediate) | Downstream HTTP/gRPC client + config struct + `.env.example` | Starts immediately after approval |
 | B (after A) | Service layer + dependency injection wiring | After client exists |
 | C (after B) | Unit tests + integration tests + doc updates | After service layer exists |
-
-All tracks within a stage run in parallel. The total time is the sum of the critical path, not all tasks combined.
 
 ---
 
@@ -147,14 +155,7 @@ A great `INTEGRATION.md` includes:
 
 ## Fleet mode
 
-`backend-integrate` uses Copilot's fleet (parallel agent) execution to implement multiple parts of an integration simultaneously. This means:
-
-- The client and config updates start at the same time
-- Tests start as soon as the service layer is ready
-- Documentation updates run in parallel with tests
-- You're not waiting for each file to be written one at a time
-
-For a typical 10-file integration, fleet mode is significantly faster than sequential execution.
+`backend-integrate` executes integration in three sequential tracks, where each track can only start once the previous one completes. This ensures the service layer always has a client to depend on, and tests always have a service to mock.
 
 ---
 
@@ -254,7 +255,7 @@ gh auth status  # confirm it worked
 
 | Requirement | Details |
 |---|---|
-| **GitHub Copilot CLI** | The plugin runs inside Copilot CLI |
+| **GitHub Copilot CLI or Claude Code** | The plugin runs inside either CLI |
 | **Downstream repo access** | Your `gh` token must have read access to the downstream repo |
 
 No Python. No `pip install`. No npm. No Docker.
