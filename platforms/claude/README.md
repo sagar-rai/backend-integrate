@@ -33,10 +33,7 @@ platforms/claude/
 │   └── backend-integrate/
 │       └── SKILL.md                 ← Skill: /backend-integrate:backend-integrate
 ├── agents/
-│   ├── backend-integrate.md         ← Main orchestrator (maxTurns: 60)
-│   ├── fleet-a.md                   ← Track A: client + config
-│   ├── fleet-b.md                   ← Track B: service layer + DI
-│   └── fleet-c.md                   ← Track C: tests + docs
+│   └── backend-integrate.md         ← Orchestrator with inline A→B→C execution
 └── README.md                        ← This file
 ```
 
@@ -54,15 +51,15 @@ Or naturally:
 Integrate the payment service from github.com/acme/payment-svc — use INTEGRATION.md for context
 ```
 
-## Fleet agents
+## Execution tracks
 
-After you approve the integration plan, the orchestrator spawns three subagents in sequence:
+After you approve the integration plan, the orchestrator works through three sequential tracks:
 
-| Agent | Track | Starts when | Builds |
-|---|---|---|---|
-| `fleet-a` | A | Immediately after approval | Downstream HTTP/gRPC client + config struct |
-| `fleet-b` | B | After `fleet-a` completes | Service layer + dependency injection wiring |
-| `fleet-c` | C | After `fleet-b` completes | Unit tests + integration tests + doc updates |
+| Track | Starts when | Builds |
+|---|---|---|
+| A | Immediately after approval | Downstream HTTP/gRPC client + config struct + `.env.example` |
+| B | After Track A completes | Service layer + dependency injection wiring |
+| C | After Track B completes | Unit tests + integration tests + doc updates |
 
 ## Shared prompts
 

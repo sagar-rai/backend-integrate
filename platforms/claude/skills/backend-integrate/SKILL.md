@@ -7,7 +7,7 @@ description: "Fetch downstream service context from a GitHub repo and execute a 
 
 ## What this skill does
 
-When invoked, this skill fetches context about a downstream service from its GitHub repository using the `gh` CLI, analyzes the integration surface, asks the developer clarifying questions, then creates and executes an integration plan using parallel fleet subagents.
+When invoked, this skill fetches context about a downstream service from its GitHub repository using the `gh` CLI, analyzes the integration surface, asks the developer clarifying questions, then creates and executes an integration plan in three sequential tracks.
 
 ## Invocation
 
@@ -177,15 +177,13 @@ Using the answers and the synthesized context, create a file-level plan:
 - Group into parallel tracks (Track A → Track B → Track C)
 - Present the plan to the user for approval before any code is written
 
-### Step 8 — Execute in fleet mode
+### Step 8 — Execute the integration
 
-Once the user approves, spawn the fleet subagents in sequence:
+Once the user approves, implement each track in sequence. Do not start the next track until the current one is complete.
 
-- **`fleet-a`** (immediate): Creates the downstream HTTP/gRPC client and configuration struct
-- **`fleet-b`** (after `fleet-a` completes): Creates the service layer wrapping the client and wires it into DI
-- **`fleet-c`** (after `fleet-b` completes): Writes unit tests, integration tests, and updates documentation
-
-Pass each agent a task spec containing: downstream service details, exact file paths, developer context from clarifying questions, and the output from the previous track.
+- **Track A** (immediate): Create the downstream HTTP/gRPC client, config struct, and update `.env.example`
+- **Track B** (after A): Create the service layer wrapping the client and wire it into DI
+- **Track C** (after B): Write unit tests, integration tests (if requested), and update documentation
 
 ### Step 9 — Clean up session files
 
