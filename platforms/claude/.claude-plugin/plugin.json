@@ -1,0 +1,13 @@
+{
+  "name": "backend-integrate",
+  "version": "2.0.0",
+  "description": "Fetch downstream service context from a GitHub repo and execute a backend integration into your current service — fetches relevant files via gh CLI, asks clarifying questions, creates a plan, and runs it with parallel agents.",
+  "author": {
+    "name": "Sagar Rai",
+    "url": "https://github.com/sagar-rai"
+  },
+  "homepage": "https://github.com/sagar-rai/backend-integrate",
+  "repository": "https://github.com/sagar-rai/backend-integrate",
+  "license": "MIT",
+  "keywords": ["integration", "backend", "downstream-service", "fleet", "gh-cli", "service-integration"]
+}

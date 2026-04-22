@@ -55,7 +55,7 @@ The `prompts/` directory contains the behavioral instructions Copilot follows:
 When editing these, always verify that:
 1. The clarifying questions are still all asked before planning
 2. The gh CLI commands use `gh api` (not MCP, not curl)
-3. Temp files still go to `~/.copilot/sessions/<uuid>/` and get cleaned up
+3. Temp files still go to `~/.agents/session/<uuid>/` and get cleaned up
 4. No credentials or tokens are hardcoded
 
 ## Testing changes
@@ -65,7 +65,7 @@ There is no automated test suite — this is a prompt-driven skill.
 To test manually:
 1. Invoke the skill against a real public GitHub repo with a README
 2. Verify all clarifying questions are asked before any plan is generated
-3. Verify temp files are created in `~/.copilot/sessions/<uuid>/`
+3. Verify temp files are created in `~/.agents/session/<uuid>/`
 4. Verify temp files are cleaned up after the session
 5. Confirm no external calls are made except via `gh` CLI
 

@@ -21,7 +21,7 @@
 - [ ] All 7 required questions from `clarification_guide.md` are asked before planning
 - [ ] No code is written before the plan is presented and approved
 - [ ] `gh` CLI is used for all GitHub access (no curl, no MCP)
-- [ ] Temp files appear in `~/.copilot/sessions/<uuid>/`
+- [ ] Temp files appear in `~/.agents/session/<uuid>/`
 - [ ] Temp files are deleted after context is loaded
 - [ ] The generated plan uses exact file paths (no placeholders)
 - [ ] Fleet tracks respect A → B → C dependency order

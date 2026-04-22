@@ -1,7 +1,10 @@
 ---
 name: backend-integrate
 description: "Fetch downstream service context from a GitHub repo and execute a backend integration — uses gh CLI to get files, asks clarifying questions, creates a parallel integration plan, and executes in fleet mode. Use when a developer wants to integrate a downstream or external service into their backend."
+model: sonnet
+maxTurns: 60
 ---
+
 
 # backend-integrate Agent
 

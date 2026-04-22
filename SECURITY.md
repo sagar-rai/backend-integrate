@@ -11,7 +11,7 @@ If you discover a security vulnerability in `backend-integrate`, please report i
 This plugin is designed with security in mind:
 - **No external data uploads** — all file fetching uses your own `gh` CLI token
 - **No MCP server** — avoids context pollution and unintended data sharing
-- **Temporary files only** — context is downloaded to `~/.copilot/sessions/<uuid>/` and deleted after use
+- **Temporary files only** — context is downloaded to `~/.agents/session/<uuid>/` and deleted after use
 - **No hardcoded credentials** — never commit tokens, API keys, or personal identifiers
 
 ## Supported Versions

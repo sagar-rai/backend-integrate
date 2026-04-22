@@ -115,8 +115,8 @@ Add support for the inventory service — repo is github.com/org/inventory, inte
 3. **Ask clarifying questions** — confirms your language/framework, patterns, error handling approach, and test requirements before writing any code
 4. **Create a plan** — produces a file-level integration plan broken into parallel tasks for review
 5. **Execute in fleet mode** — launches parallel agents to implement the client, service layer, config, DI wiring, and tests simultaneously
-6. **Clean up** — removes all temporary files from `~/.copilot/sessions/<uuid>/` automatically
+6. **Clean up** — removes all temporary files from `~/.agents/session/<uuid>/` automatically
 
 ## Session cleanup
 
-All temporary files are stored in `~/.copilot/sessions/<uuid>/` during the integration session and deleted automatically when context extraction is complete. Nothing is written to your repo until the plan is approved.
+All temporary files are stored in `~/.agents/session/<uuid>/` during the integration session and deleted automatically when context extraction is complete. Nothing is written to your repo until the plan is approved.
