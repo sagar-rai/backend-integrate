@@ -60,6 +60,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and
 
 ---
 
-[Unreleased]: https://github.com/sagar-rai/backend-integrate-copilot/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/sagar-rai/backend-integrate-copilot/releases/tag/v1.0.0
-[2.0.0]: https://github.com/sagar-rai/backend-integrate-copilot/releases/tag/v2.0.0
+[Unreleased]: https://github.com/sagar-rai/backend-integrate/compare/v2.0.0...HEAD
+[1.0.0]: https://github.com/sagar-rai/backend-integrate/releases/tag/v1.0.0
+[2.0.0]: https://github.com/sagar-rai/backend-integrate/releases/tag/v2.0.0
